@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 const images = [
   "https://img.freepik.com/free-vector/caravan-desert-background-arab-people-camels-silhouettes-sands-caravan-with-camel-camelcade-silhouette-travel-sand-desert-illustration_1284-51614.jpg?w=826&t=st=1707124878~exp=1707125478~hmac=aae2aa2edbb7556eaa39e5bafa05681cabaca507886bfee38755ff07ba586fea",
@@ -157,3 +157,14 @@ export const unfavorite = mutation({
     return board;
   },
 });
+
+export const get = query({
+  args: {id: v.id("boards")},
+  handler: async (ctx, args) => {
+    const board = await ctx.db.get(args.id);
+    // if (!board) {
+    //   throw new Error("Board not found");
+    // }
+    return board
+  }
+})
